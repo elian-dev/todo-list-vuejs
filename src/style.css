@@ -235,4 +235,19 @@ input:checked ~ .bubble::after {
   font-size: 1rem;
   color: var(--grey);
   font-style: italic;
+  text-align: center;
+}
+
+.empty h2 {
+	margin-bottom: 20px;
+}
+
+.empty img {
+	max-width: 40%;
+}
+
+@media screen and (min-width: 768px){
+	.empty img {
+		max-width: 15%;
+	}
 }

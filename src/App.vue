@@ -1,8 +1,10 @@
 <script setup>
   import { ref, onMounted, computed, watch } from 'vue'
   import GreetingSection from './components/GreetingSection.vue';
+  import EmptyDraw from './assets/empty.svg';
 
   const todos = ref([]);
+  const isEmpty = ref(true);
 
   const input_content = ref('');
   const input_category = ref(null);
@@ -32,11 +34,13 @@
   }
 
   watch(todos, newVal => {
-    localStorage.setItem('todos', JSON.stringify(newVal))
+    localStorage.setItem('todos', JSON.stringify(newVal));
+    isEmpty.value =  todos.value.length === 0;
   }, {deep: true});
 
   onMounted(() => {
-    todos.value = JSON.parse(localStorage.getItem('todos') || [])
+    todos.value = JSON.parse(localStorage.getItem('todos') || []);
+    isEmpty.value =  todos.value.length === 0;
   });
 </script>
 
@@ -90,7 +94,13 @@
 
     <section class="todo-list">
       <h3>TODO LIST</h3>
-      <div class="list" v-if="todos.value">
+      <div class="list">
+
+        <div class="empty" v-if="isEmpty">
+          <h2>Your task list is empty!</h2>
+          <img :src="EmptyDraw" alt="" srcset="">
+        </div>
+
         <div v-for="todo in todos_asc" :class="`todo-item ${todo.done} && 'done'`">
           <label>
             <input type="checkbox" v-model="todo.done">
@@ -110,9 +120,6 @@
             </button>
           </div>
         </div>
-      </div>
-      <div v-else>
-        <p class="empty">Add todos!</p>
       </div>
     </section>
 
