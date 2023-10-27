@@ -5,6 +5,8 @@
 
   const todos = ref([]);
   const isEmpty = ref(true);
+  const isSelectedAll = ref(false);
+  const isAllDone = ref(false);
 
   const input_content = ref('');
   const input_category = ref(null);
@@ -30,7 +32,32 @@
   };
 
   const removeTodo = todo => {
-    todos.value = todos.value.filter(t => t !== todo)
+    const confirm = window.confirm("Are you sure to delete this item? \nThis action can be reverted");
+    
+    if(confirm) {
+      todos.value = todos.value.filter(t => t !== todo)
+    } else {
+      return;
+    }
+  }
+
+  const markDone = () => {
+    todos.value.map((todo) => {
+      todo.done = !isAllDone.value && true;
+    });
+
+    isAllDone.value = !isAllDone.value && true;
+
+  }
+
+  const deleteAll = () => {
+    const confirm = window.confirm("Are you sure to delete all items? \nThis action can be reverted");
+    
+    if(confirm) {
+      todos.value = [];
+    } else {
+      return;
+    }
   }
 
   watch(todos, newVal => {
@@ -96,12 +123,19 @@
       <h3>TODO LIST</h3>
       <div class="list">
 
-        <div class="empty" v-if="isEmpty">
+        <article class="empty" v-if="isEmpty">
           <h2>Your task list is empty!</h2>
           <img :src="EmptyDraw" alt="" srcset="">
-        </div>
+        </article>
 
-        <div v-for="todo in todos_asc" :class="`todo-item ${todo.done} && 'done'`">
+        <article 
+          v-for="todo in todos_asc" 
+          class="todo-item"
+          :class="{
+            done: todo.done,
+            selected: isSelectedAll
+          }"
+        >
           <label>
             <input type="checkbox" v-model="todo.done">
             <span :class="`bubble ${ todo.category }`"></span>
@@ -119,7 +153,25 @@
               Delete
             </button>
           </div>
-        </div>
+        </article>
+
+        <article class="foot" v-show="!isEmpty">
+          <div class="selection">
+            <label class="select">
+              <input type="checkbox" value="check-all" @click="isSelectedAll = !isSelectedAll && true">
+              Select all
+            </label>
+          </div>
+          
+          <div class="actions" v-show="isSelectedAll == true">
+            <button class="done" @click="markDone">              
+              <span v-if="isAllDone">Unmark</span>
+              <span v-else>Mark all as done</span>
+              
+            </button>
+            <button class="delete" @click="deleteAll">Delete All</button>
+          </div>
+        </article>
       </div>
     </section>
 

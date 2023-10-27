@@ -102,8 +102,7 @@ h4 {
 	cursor: pointer;
 }
 
-input[type="radio"],
-input[type="checkbox"] {
+.options input[type="radio"] {
 	display: none;
 }
 
@@ -189,6 +188,14 @@ input:checked ~ .bubble::after {
 	cursor: pointer;
 }
 
+.todo-item input[type="checkbox"] {
+	display: none;
+}
+
+.todo-list .todo-item.selected {
+	background-color: #3a82ee22;
+}
+
 .todo-item .todo-content {
 	flex: 1 1 0%;
 }
@@ -198,12 +205,12 @@ input:checked ~ .bubble::after {
 	font-size: 1.125rem;
 }
 
-.todo-item .actions {
+.actions {
 	display: flex;
 	align-items: center;
 }
 
-.todo-item .actions button {
+.actions button {
 	display: block;
 	padding: 0.5rem;
 	border-radius: 0.25rem;
@@ -212,20 +219,20 @@ input:checked ~ .bubble::after {
 	transition: 0.2s ease-in-out;
 }
 
-.todo-item .actions button:hover {
+.actions button:hover {
 	opacity: 0.75;
 }
 
-.todo-item .actions .edit {
+.actions .edit {
 	margin-right: 0.5rem;
 	background-color: var(--primary);
 }
 
-.todo-item .actions .delete {
+.actions .delete {
 	background-color: var(--danger);
 }
 
-.todo-item.done .todo-content input {
+.done .todo-content input {
 	text-decoration: line-through;
 	color: var(--grey);
 }
@@ -250,4 +257,36 @@ input:checked ~ .bubble::after {
 	.empty img {
 		max-width: 15%;
 	}
+}
+
+.foot {
+	display: grid;
+	grid-template-columns: 40% 1fr;
+	margin-top: 3rem;
+}
+
+.foot .actions {
+	justify-content: end;
+	gap: 10px;
+}
+
+.foot .actions .done {
+	background-color: #313154;
+}
+
+.foot .selection {
+	display: flex;
+	align-items: center;
+}
+
+.foot .selection .select {
+	color: #888;
+	display: flex;
+	align-items: center;
+}
+
+.foot .selection .select input {
+	width: 20px;
+	height: 25px;
+	margin-right: 5px;
 }
