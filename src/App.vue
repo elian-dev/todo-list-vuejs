@@ -19,7 +19,7 @@
     };
 
     todos.value.push({
-      content: input_content.value,
+      content: input_content.value.trim(),
       category: input_category.value,
       done: false,
       createdAt: new Date().getTime()
