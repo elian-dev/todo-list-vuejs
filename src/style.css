@@ -292,5 +292,5 @@ input:checked ~ .bubble::after {
 .foot .selection .select input {
   width: 20px;
   height: 25px;
-  margin-right: 5px;
+  margin-right: 10px;
 }
