@@ -20,6 +20,22 @@
   font-family: "montserrat", sans-serif;
 }
 
+.app {
+  max-width: 1440px;
+  margin: auto;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 40% auto;
+}
+
+@media screen and (max-width: 768px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
 input:not([type="radio"]):not([type="checkbox"]),
 button {
   appearance: none;
