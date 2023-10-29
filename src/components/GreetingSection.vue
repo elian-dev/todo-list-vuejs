@@ -16,7 +16,7 @@
     <section class="greeting">
       <h1 class="title">
         What's up, 
-        <input type="text" placeholder="Name here" v-model="name">
+        <input type="text" id="firstName" name="firstName" placeholder="Name here" v-model="name">
       </h1>
     </section>
 </template>

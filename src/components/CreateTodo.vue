@@ -35,6 +35,8 @@
           type="text" 
           placeholder="e.g. Make a video" 
           v-model="input_content"
+          name="todo-name"
+          id="todo-name"
         />
 
         <h4>Pick a category</h4>
@@ -63,7 +65,7 @@
           </label>
         </article>
 
-        <input type="submit" value="Add todo">
+        <input type="submit" name="create-todo" value="Add todo">
       </form>
 
     </section>
