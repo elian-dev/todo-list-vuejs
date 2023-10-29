@@ -310,3 +310,7 @@ input:checked ~ .bubble::after {
   height: 25px;
   margin-right: 10px;
 }
+
+.list article.dragged {
+  background-color: #e6e6e6;
+}

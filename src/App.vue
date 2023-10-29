@@ -30,6 +30,11 @@ const removeTodo = (todo) => {
 const removeAllTodos = () => {
   todos.value = [];
 };
+
+// Event to reorder drag state todos
+const reorderTodos = (todosReorder) => {
+  todos.value = todosReorder;
+};
 </script>
 
 <template>
@@ -46,6 +51,7 @@ const removeAllTodos = () => {
           :isEmpty="isEmpty"
           @remove="removeTodo"
           @removeAll="removeAllTodos"
+          @reorder="reorderTodos"
         />
       </div>
     </div>

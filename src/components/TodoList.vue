@@ -3,10 +3,11 @@ import { ref, computed } from "vue";
 import EmptyDraw from "../assets/empty.svg";
 
 const props = defineProps(["todos", "isEmpty"]);
-const emit = defineEmits(["remove", "removeAll"]);
+const emit = defineEmits(["remove", "removeAll", "reorder"]);
 
 const isSelectedAll = ref(false);
 const isAllDone = ref(false);
+const draggedItem = ref(null);
 
 const removeTodo = (todo) => {
   const confirm = window.confirm(
@@ -40,11 +41,29 @@ const deleteAll = () => {
   }
 };
 
-const todos_asc = computed(() =>
-  props.todos.sort((a, b) => {
-    return b.createdAt - a.createdAt;
-  })
-);
+// On drag start: store the item dragged
+const handleDragStart = (index) => {
+  draggedItem.value = index;
+};
+
+const handleDragOver = (event) => {
+  event.preventDefault();
+};
+
+// On drop event: delete and reorder the state
+const handleDrop = (index) => {
+  const droppedItem = props.todos.splice(draggedItem.value, 1)[0];
+  props.todos.splice(index, 0, droppedItem);
+
+  emit("reorder", props.todos);
+
+  draggedItem.value = null;
+};
+
+// On drag end: if drag end remove stored values
+const handleDragEnd = () => {
+  draggedItem.value = null;
+};
 </script>
 
 <template>
@@ -52,11 +71,17 @@ const todos_asc = computed(() =>
     <h3>TODO LIST</h3>
     <div class="list">
       <article
-        v-for="todo in todos_asc"
+        v-for="(todo, index) in todos"
         class="todo-item"
+        :draggable="true"
+        @dragstart="handleDragStart(index)"
+        @dragover="handleDragOver"
+        @drop="handleDrop(index)"
+        @dragend="handleDragEnd"
         :class="{
           done: todo.done,
           selected: isSelectedAll,
+          dragged: index === draggedItem,
         }"
       >
         <label>
