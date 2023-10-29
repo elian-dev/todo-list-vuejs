@@ -314,3 +314,7 @@ input:checked ~ .bubble::after {
 .list article.dragged {
   background-color: #e6e6e6;
 }
+
+.drag-icon {
+  padding-right: 10px;
+}

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import EmptyDraw from "../assets/empty.svg";
+import dragIcon from "../assets/drag-vertical-outline.svg";
 
 const props = defineProps(["todos", "isEmpty"]);
 const emit = defineEmits(["remove", "removeAll", "reorder"]);
@@ -84,6 +85,7 @@ const handleDragEnd = () => {
           dragged: index === draggedItem,
         }"
       >
+        <img class="drag-icon" :src="dragIcon" alt="drag icon" />
         <label>
           <input type="checkbox" v-model="todo.done" />
           <span :class="`bubble ${todo.category}`"></span>
@@ -124,6 +126,6 @@ const handleDragEnd = () => {
 
   <article class="empty" v-if="isEmpty">
     <h2>Your task list is empty!</h2>
-    <img :src="EmptyDraw" alt="" srcset="" />
+    <img :src="EmptyDraw" alt="Empty task list! Add a new todo" />
   </article>
 </template>
