@@ -3,6 +3,7 @@
     import EmptyDraw from '../assets/empty.svg';
     
     const props = defineProps(['todos', 'isEmpty']);
+    const emit = defineEmits(['remove', 'removeAll']);
 
     const isSelectedAll = ref(false);
     const isAllDone = ref(false);
@@ -11,7 +12,7 @@
         const confirm = window.confirm("Are you sure to delete this item? \nThis action can be reverted");
 
         if(confirm) {
-            props.todos = props.todos.filter(t => t !== todo);
+          emit('remove', todo);
         } else {
             return;
         }
@@ -29,7 +30,7 @@
         const confirm = window.confirm("Are you sure to delete all items? \nThis action can be reverted");
         
         if(confirm) {
-            props.todos = [];
+            emit('removeAll')
         } else {
             return;
         }
@@ -81,7 +82,7 @@
         <article class="foot" v-show="!props.isEmpty">
           <div class="selection">
             <label class="select">
-              <input type="checkbox" value="check-all" @click="isSelectedAll = !isSelectedAll && true">
+              <input type="checkbox" name="check-all" value="check-all" @click="isSelectedAll = !isSelectedAll && true">
               Select all
             </label>
           </div>

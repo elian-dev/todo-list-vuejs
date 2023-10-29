@@ -17,6 +17,16 @@
     isEmpty.value =  todos.value.length === 0;
   });
 
+  // Event to remove todo
+  const removeTodo = todo => {
+    todos.value = todos.value.filter(t => t !== todo);
+  }
+
+  // Event to remove all todos
+  const removeAllTodos = () => {
+    todos.value = [];
+  }
+
 </script>
 
 <template>
@@ -26,7 +36,12 @@
 
     <CreateTodo :todos="todos" />
 
-    <TodoList :todos="todos" :isEmpty="isEmpty" />
+    <TodoList 
+      :todos="todos" 
+      :isEmpty="isEmpty" 
+      @remove="removeTodo" 
+      @removeAll="removeAllTodos"
+    />
 
   </main>
 </template>
